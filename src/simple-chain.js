@@ -20,10 +20,6 @@ const chainMaker = {
     },
 
     removeLink(position) {
-        //
-        // let index;
-        // this.chainArr = this.chainArr.map((elem, i) => {
-        // if (position <= 0 || position > this.chainLength) {
         if (position <= 0 || position > this.chainLength || typeof position != "number") {
             this.chainArr = [];
             this.chainLength = 0;
@@ -32,7 +28,6 @@ const chainMaker = {
             this.chainArr.splice(position-1, 1);
             this.chainLength = this.chainLength - 1;
         }
-        // })
         return this;
     },
 
@@ -42,9 +37,6 @@ const chainMaker = {
     },
 
     finishChain() {
-        // this.chainArr = this.chainArr.map(elem => {
-        //     `'( '${elem}' )'`
-        // })
         let tempArr = [...this.chainArr];
         this.chainArr = [];
         this.chainLength = 0;
