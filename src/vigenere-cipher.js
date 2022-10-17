@@ -20,6 +20,14 @@ const {NotImplementedError} = require('../extensions/index.js');
  *
  */
 class VigenereCipheringMachine {
+	constructor(direction = true) {
+		this.direction = direction;
+	}
+
+
+
+
+
 
 	isLetter(letter) {
 		let l = letter.charCodeAt();
@@ -28,6 +36,10 @@ class VigenereCipheringMachine {
 	};
 
 	encrypt(message, key) {
+		if (!message || !key) {
+			throw new Error('Incorrect arguments!');
+		}
+
 		let cipher = "";
 		message = message.toUpperCase();
 		for (let i = 0, j = 0; i < message.length; i++) {
@@ -41,12 +53,33 @@ class VigenereCipheringMachine {
 				cipher += currentLetter;
 			}
 		}
-		return cipher;
+		if(this.direction) return cipher;
+		return cipher.split('').reverse().join('');
 	}
 
-	decrypt() {
-		throw new NotImplementedError('Not implemented');
-		// remove line with error and write your code here
+	decrypt(message, key) {
+		if (!message || !key) {
+			throw new Error('Incorrect arguments!');
+		}
+		let cipher = "";
+		for (let i = 0, j = 0; i < message.length; i++) {
+			let currentLetter = message[i];
+			if (this.isLetter(currentLetter)) {
+				let upperLetter = ((currentLetter.charCodeAt() - 65) - (key[j % key.length].toUpperCase().charCodeAt() - 65))
+				if(upperLetter < 0) {
+					upperLetter = (upperLetter + 26) % 26;
+				} else {
+					upperLetter = (upperLetter) % 26;
+				}
+				cipher += String.fromCharCode(upperLetter + 65);
+				j++;
+			}
+			else {
+				cipher += currentLetter;
+			}
+		}
+		if(this.direction) return cipher;
+		return cipher.split('').reverse().join('');
 	}
 }
 
